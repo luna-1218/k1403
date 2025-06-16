@@ -17,13 +17,13 @@ Date: 2025-06-16
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #2A62B6;
-            --secondary-teal: #4ECDC4;
-            --accent-grey: #A9A9A9;
-            --supporting-light-blue: #E0F2FE;
-            --dark-text: #263238;
-            --light-background: #FFFFFF;
-            --page-background: #F4F7F9;
+            --primary-purple: #8B2BE2; /* A vibrant purple based on user's input hue */
+            --secondary-light-purple: rgb(205,172,235); /* From user's RGB(205,172,235) */
+            --accent-light-grey-purple: hsl(271,61%,80%); /* From user's HSL(271,61%,80%) - useful for lighter accents/borders */
+            --supporting-pale-purple: hsl(271,27%,92%); /* From user's HSL(271,27%,92%) */
+            --dark-text: #263238; /* Keeping original dark text for contrast */
+            --light-background: #FFFFFF; /* Keeping white for card backgrounds */
+            --page-background: #efeef0; /* From user's Hex */
         }
         body {
             font-family: 'Noto Sans KR', sans-serif;
@@ -46,8 +46,8 @@ Date: 2025-06-16
         .section-title {
             font-size: 1.75rem; /* 28px */
             font-weight: 700; /* bold */
-            color: var(--primary-blue);
-            border-bottom: 2px solid var(--primary-blue);
+            color: var(--primary-purple);
+            border-bottom: 2px solid var(--primary-purple);
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
@@ -59,7 +59,7 @@ Date: 2025-06-16
             margin-top: 1.5rem;
         }
         .report-header {
-            background-color: var(--primary-blue);
+            background-color: var(--primary-purple);
             color: white;
             padding: 2rem 1rem;
             text-align: center;
@@ -71,16 +71,16 @@ Date: 2025-06-16
         }
         .report-subtitle {
             font-size: 1.125rem; /* 18px */
-            color: var(--supporting-light-blue);
+            color: var(--supporting-pale-purple);
             margin-bottom: 1rem;
         }
         .team-info {
             font-size: 0.875rem; /* 14px */
-            color: var(--supporting-light-blue);
+            color: var(--supporting-pale-purple);
         }
         .highlight-box {
-            background-color: var(--supporting-light-blue);
-            border-left: 4px solid var(--secondary-teal);
+            background-color: var(--supporting-pale-purple);
+            border-left: 4px solid var(--secondary-light-purple);
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 0.25rem;
@@ -93,13 +93,13 @@ Date: 2025-06-16
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid var(--accent-grey);
+            border: 1px solid var(--accent-light-grey-purple);
             padding: 0.75rem;
             text-align: left;
             font-size: 0.875rem; /* 14px */
         }
         th {
-            background-color: var(--supporting-light-blue);
+            background-color: var(--supporting-pale-purple);
             font-weight: 600;
         }
         /* Tooltip styling for Chart.js */
@@ -328,140 +328,159 @@ Date: 2025-06-16
     </footer>
 
     <script>
-        // Chart.js - AI Usage Chart
-        const aiUsageCtx = document.getElementById('aiUsageChart').getContext('2d');
-        new Chart(aiUsageCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['AI 주기적 활용 (16명)', '그 외 (2명)'],
-                datasets: [{
-                    label: 'AI 활용 현황',
-                    data: [16, 2], // 18명 중 16명 활용
-                    backgroundColor: ['#2A62B6', '#A9A9A9'],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            font: { family: "'Noto Sans KR', sans-serif", size: 10 },
-                            padding: 10,
-                            boxWidth: 12,
-                        }
-                    },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(0,0,0,0.7)',
-                        titleFont: { family: "'Noto Sans KR', sans-serif", size: 12 },
-                        bodyFont: { family: "'Noto Sans KR', sans-serif", size: 11 },
-                        callbacks: {
-                            label: function(context) {
-                                return context.label;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Chart.js - Satisfaction Chart
-        const satisfactionCtx = document.getElementById('satisfactionChart').getContext('2d');
-        new Chart(satisfactionCtx, {
-            type: 'bar',
-            data: {
-                labels: ['구체적 질문 시\n만족 응답'],
-                datasets: [{
-                    label: '학생 수 (총 18명)',
-                    data: [14], // 14명 (77.8%)
-                    backgroundColor: ['#4ECDC4'],
-                    borderColor: ['#4AA098'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                indexAxis: 'y', // 가로 막대형 차트
-                 scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: 18, // 전체 학생 수
-                        ticks: {
-                             font: { family: "'Noto Sans KR', sans-serif", size: 10 }
-                        }
-                    },
-                    y: {
-                        ticks: {
-                             font: { family: "'Noto Sans KR', sans-serif", size: 10 },
-                             callback: function(value) { // 레이블 줄바꿈 처리
-                                const label = this.getLabelForValue(value);
-                                return label.split('\n');
-                             }
-                        }
-                    }
+        // Ensure the DOM is fully loaded before trying to access canvas elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart.js - AI Usage Chart
+            const aiUsageCtx = document.getElementById('aiUsageChart').getContext('2d');
+            new Chart(aiUsageCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['AI 주기적 활용 (16명)', '그 외 (2명)'],
+                    datasets: [{
+                        label: 'AI 활용 현황',
+                        data: [16, 2], // 18명 중 16명 활용
+                        backgroundColor: ['var(--primary-purple)', 'var(--accent-light-grey-purple)'],
+                        hoverOffset: 4
+                    }]
                 },
-                plugins: {
-                    legend: {
-                        display: false // 단일 데이터셋이므로 범례 숨김
-                    },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(0,0,0,0.7)',
-                        titleFont: { family: "'Noto Sans KR', sans-serif", size: 12 },
-                        bodyFont: { family: "'Noto Sans KR', sans-serif", size: 11 },
-                        callbacks: {
-                            label: function(context) {
-                                return ` ${context.raw}명 (77.8%)`;
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { family: "'Noto Sans KR', sans-serif", size: 10 },
+                                padding: 10,
+                                boxWidth: 12,
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            titleFont: { family: "'Noto Sans KR', sans-serif", size: 12 },
+                            bodyFont: { family: "'Noto Sans KR', sans-serif", size: 11 },
+                            callbacks: {
+                                label: function(context) {
+                                    // Custom label to display the count and percentage
+                                    const total = context.dataset.data.reduce((sum, current) => sum + current, 0);
+                                    const value = context.raw;
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return `${context.label.split('(')[0].trim()} ${value}명 (${percentage}%)`;
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
 
-        // Chart.js - Revision Chart
-        const revisionCtx = document.getElementById('revisionChart').getContext('2d');
-        new Chart(revisionCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['질문 반복 수정 (약 14명)', '그 외 (약 4명)'], // 18명 중 80%는 14.4명 -> 14명으로 가정
-                datasets: [{
-                    label: '질문 반복 수정 비율',
-                    data: [14, 4], // 80% of 18 is 14.4, rounded to 14 for students. (18-14 = 4)
-                    backgroundColor: ['#2A62B6', '#A9A9A9'],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                     legend: {
-                        position: 'bottom',
-                        labels: {
-                            font: { family: "'Noto Sans KR', sans-serif", size: 10 },
-                            padding: 10,
-                            boxWidth: 12,
+            // Chart.js - Satisfaction Chart
+            const satisfactionCtx = document.getElementById('satisfactionChart').getContext('2d');
+            new Chart(satisfactionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['구체적 질문 시\n만족 응답'],
+                    datasets: [{
+                        label: '학생 수 (총 18명)',
+                        data: [14], // 14명 (77.8%)
+                        backgroundColor: ['var(--secondary-light-purple)'],
+                        borderColor: ['var(--secondary-light-purple)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // 가로 막대형 차트
+                     scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 18, // 전체 학생 수
+                            ticks: {
+                                 font: { family: "'Noto Sans KR', sans-serif", size: 10 }
+                            },
+                             title: {
+                                display: true,
+                                text: '학생 수',
+                                font: {
+                                    family: "'Noto Sans KR', sans-serif",
+                                    size: 12,
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                 font: { family: "'Noto Sans KR', sans-serif", size: 10 },
+                                 callback: function(value) { // 레이블 줄바꿈 처리
+                                    const label = this.getLabelForValue(value);
+                                    return label.split('\n');
+                                 }
+                            }
                         }
                     },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(0,0,0,0.7)',
-                        titleFont: { family: "'Noto Sans KR', sans-serif", size: 12 },
-                        bodyFont: { family: "'Noto Sans KR', sans-serif", size: 11 },
-                        callbacks: {
-                            label: function(context) {
-                                let percentage = ((context.raw / 18) * 100).toFixed(1);
-                                return `${context.label.split('(')[0].trim()} (${percentage}%)`;
+                    plugins: {
+                        legend: {
+                            display: false // 단일 데이터셋이므로 범례 숨김
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            titleFont: { family: "'Noto Sans KR', sans-serif", size: 12 },
+                            bodyFont: { family: "'Noto Sans KR', sans-serif", size: 11 },
+                            callbacks: {
+                                label: function(context) {
+                                    const percentage = ((context.raw / 18) * 100).toFixed(1);
+                                    return ` 학생 수: ${context.raw}명 (${percentage}%)`;
+                                }
                             }
                         }
                     }
                 }
-            }
+            });
+
+            // Chart.js - Revision Chart
+            const revisionCtx = document.getElementById('revisionChart').getContext('2d');
+            new Chart(revisionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['질문 반복 수정 (약 14명)', '그 외 (약 4명)'], // 18명 중 80%는 14.4명 -> 14명으로 가정
+                    datasets: [{
+                        label: '질문 반복 수정 비율',
+                        data: [14, 4], // 80% of 18 is 14.4, rounded to 14 for students. (18-14 = 4)
+                        backgroundColor: ['var(--primary-purple)', 'var(--accent-light-grey-purple)'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                         legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { family: "'Noto Sans KR', sans-serif", size: 10 },
+                                padding: 10,
+                                boxWidth: 12,
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            titleFont: { family: "'Noto Sans KR', sans-serif", size: 12 },
+                            bodyFont: { family: "'Noto Sans KR', sans-serif", size: 11 },
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((sum, current) => sum + current, 0);
+                                    const value = context.raw;
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return `${context.label.split('(')[0].trim()} ${value}명 (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         });
     </script>
     <!-- 이 HTML 인포그래픽은 학생 공동 조사 보고서의 내용을 기반으로 AI에 의해 생성되었습니다. -->
