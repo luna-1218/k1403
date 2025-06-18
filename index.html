@@ -17,13 +17,20 @@ Date: 2025-06-16
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-purple: #8B2BE2; /* A vibrant purple based on user's input hue */
-            --secondary-light-purple: rgb(205,172,235); /* From user's RGB(205,172,235) */
-            --accent-light-grey-purple: hsl(271,61%,80%); /* From user's HSL(271,61%,80%) - useful for lighter accents/borders */
-            --supporting-pale-purple: hsl(271,27%,92%); /* From user's HSL(271,27%,92%) */
+            /* Blue Theme Colors */
+            --color-blue-main: rgb(135,177,237); /* Main blue from user's RGB */
+            --color-blue-secondary: hsl(215,74%,73%); /* Secondary blue from user's HSL */
+            --color-blue-light-accent: hsl(215,43%,93%); /* Light accent blue from user's HSV */
+
+            /* Green Theme Colors */
+            --color-green-main: #69e113; /* Main green from user's Hex */
+            --color-green-secondary: hsl(95,70%,60%); /* Derived secondary green for contrast */
+            --color-green-light-accent: hsl(95,92%,88%); /* Light green accent from user's HSL */
+
+            /* Neutral Colors */
             --dark-text: #263238; /* Keeping original dark text for contrast */
             --light-background: #FFFFFF; /* Keeping white for card backgrounds */
-            --page-background: #efeef0; /* From user's Hex */
+            --page-background: #efeef0; /* Keeping user's provided Hex for page background */
         }
         body {
             font-family: 'Noto Sans KR', sans-serif;
@@ -46,8 +53,8 @@ Date: 2025-06-16
         .section-title {
             font-size: 1.75rem; /* 28px */
             font-weight: 700; /* bold */
-            color: var(--primary-purple);
-            border-bottom: 2px solid var(--primary-purple);
+            color: var(--color-blue-main); /* Using main blue for section titles */
+            border-bottom: 2px solid var(--color-blue-main);
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
@@ -59,7 +66,7 @@ Date: 2025-06-16
             margin-top: 1.5rem;
         }
         .report-header {
-            background-color: var(--primary-purple);
+            background-color: var(--color-blue-main); /* Using main blue for header background */
             color: white;
             padding: 2rem 1rem;
             text-align: center;
@@ -71,16 +78,16 @@ Date: 2025-06-16
         }
         .report-subtitle {
             font-size: 1.125rem; /* 18px */
-            color: var(--supporting-pale-purple);
+            color: var(--color-blue-light-accent); /* Using light blue accent for subtitle */
             margin-bottom: 1rem;
         }
         .team-info {
             font-size: 0.875rem; /* 14px */
-            color: var(--supporting-pale-purple);
+            color: var(--color-blue-light-accent); /* Using light blue accent for team info */
         }
         .highlight-box {
-            background-color: var(--supporting-pale-purple);
-            border-left: 4px solid var(--secondary-light-purple);
+            background-color: var(--color-blue-light-accent); /* Using light blue accent for highlight box background */
+            border-left: 4px solid var(--color-blue-secondary); /* Using secondary blue for highlight box border */
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 0.25rem;
@@ -93,13 +100,13 @@ Date: 2025-06-16
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid var(--accent-light-grey-purple);
+            border: 1px solid var(--color-blue-secondary); /* Using secondary blue for table borders */
             padding: 0.75rem;
             text-align: left;
             font-size: 0.875rem; /* 14px */
         }
         th {
-            background-color: var(--supporting-pale-purple);
+            background-color: var(--color-blue-light-accent); /* Using light blue accent for table headers */
             font-weight: 600;
         }
         /* Tooltip styling for Chart.js */
@@ -301,11 +308,7 @@ Date: 2025-06-16
         <section id="conclusion" class="mb-12">
             <h2 class="section-title">4. 결론</h2>
             <div class="info-card space-y-3">
-                <p>본 조사는 미림마이스터고 1학년 4반 학생들이 AI를 활용하는 방식과 그 과정에서의 어려움 및 전략을 파악하고자 진행되었다. AI가 교육 현장에서 중요한 도구로 자리 잡음에 따라, 실제 학생 경험을 바탕으로 효과적인 AI 교육 방향을 설정하는 것이 목적이다.</p>
-                <p>조사 결과, 학생들은 AI 질문 시 명확성과 구체성이 답변의 질에 큰 영향을 미친다는 것을 인식하고 있었다. 한 학생은 "처음엔 그냥 막연하게 물었더니 엉뚱한 답이 나와서, 두세 번 질문을 바꿔 써야 했다"고 언급하며, 답을 얻기 위해 전략적으로 프롬프트를 다듬고 있음을 보여주었다.</p>
-                <p>학생들은 AI의 한계를 경험적으로 체감하며, AI가 제공한 자료가 교과서 내용과 맞지 않거나 누락된 부분을 스스로 확인하고 수정하는 등 AI가 완전무결하지 않음을 인식하고 보완하려는 태도를 보였다.</p>
-                <p>흥미롭게도, 학생들은 점차 모호한 질문보다 구체적이고 상황에 맞는 질문을 하도록 학습하고 있었다. 예를 들어, "AI야, 환경 문제 알려줘"라는 질문을 "기후 변화로 인한 해수면 상승 원인을 중학생도 이해할 수 있게 설명해줘"로 바꾼 뒤 원하는 답을 얻은 사례는 학생들이 디지털 리터러시와 메타인지 능력을 함께 키워가고 있음을 시사한다.</p>
-                <p>결론적으로, 이번 조사는 학생들이 AI와의 상호작용을 통해 어떻게 사고하고 문제를 해결하는지를 보여주었다. 향후 AI 교육은 기능 중심을 넘어, 질문 설계 능력, 결과 해석, 정보 재구성 능력을 기르는 방향으로 나아가야 한다. 본 조사는 이러한 교육 방향 설정에 실질적인 기초 자료로 활용될 수 있으며, 디지털 시대를 살아가는 학생들에게 필요한 핵심 역량이 무엇인지 확인했다는 점에서 교육적 가치가 높다.</p>
+                <p>본 조사는 미림마이스터고 1학년 4반 학생들의 AI 활용 실태, 주요 어려움, 그리고 효과적인 프롬프트 전략을 분석했다. 학생들은 프롬프트의 명확성과 구체성이 AI 답변의 질에 중요하며, AI의 한계를 인식하고 스스로 정보를 검증하고 보완하는 능력을 보여주었다. 이는 학생들이 AI와의 상호작용을 통해 디지털 리터러시와 메타인지 능력을 함께 키워가고 있음을 시사한다.</p>
             </div>
         </section>
 
@@ -339,7 +342,7 @@ Date: 2025-06-16
                     datasets: [{
                         label: 'AI 활용 현황',
                         data: [16, 2], // 18명 중 16명 활용
-                        backgroundColor: ['var(--primary-purple)', 'var(--accent-light-grey-purple)'],
+                        backgroundColor: ['var(--color-blue-main)', 'var(--color-green-main)'], /* Main blue and main green */
                         hoverOffset: 4
                     }]
                 },
@@ -383,8 +386,8 @@ Date: 2025-06-16
                     datasets: [{
                         label: '학생 수 (총 18명)',
                         data: [14], // 14명 (77.8%)
-                        backgroundColor: ['var(--secondary-light-purple)'],
-                        borderColor: ['var(--secondary-light-purple)'],
+                        backgroundColor: ['var(--color-blue-main)'], /* Use main blue as requested */
+                        borderColor: ['var(--color-blue-main)'], /* Border color for the bar */
                         borderWidth: 1
                     }]
                 },
@@ -448,7 +451,7 @@ Date: 2025-06-16
                     datasets: [{
                         label: '질문 반복 수정 비율',
                         data: [14, 4], // 80% of 18 is 14.4, rounded to 14 for students. (18-14 = 4)
-                        backgroundColor: ['var(--primary-purple)', 'var(--accent-light-grey-purple)'],
+                        backgroundColor: ['var(--color-green-main)', 'var(--color-blue-main)'], /* Main green and main blue */
                         hoverOffset: 4
                     }]
                 },
